@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+    <template id="headb">
+        <h2>head</h2>
+    </template>
+    <template id="leftb">
+            <h2>left</h2>
+    </template>
+
+    <template id="mainb">
+            <h2>main</h2>
+    </template>
+
+    <div id="app">
+        <router-view name="default"></router-view>
+        <router-view name="leftb"></router-view>
+        <router-view name="mainb"></router-view>
+    </div>
+    <script>
+        var a = Vue.component('headb', {
+            template:'#headb'
+        })
+
+        var b =Vue.component('leftb', {
+            template:'#leftb'
+        })
+
+        var c =Vue.component('mainb', {
+            template:'#mainb'
+        })
+
+        const routerobj = new VueRouter({
+            routes: [{
+                path:'/',components:{
+                    'default':a,
+                    'leftb':b,
+                    'mainb':c,
+                }
+            }] 
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+        
+
+            },
+            methods: {
+        
+            },
+            router:routerobj,
+        })
+    </script>
+</body>
+</html>

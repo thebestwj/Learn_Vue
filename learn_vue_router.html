@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <style>
+    .router-link-active{
+        background-color: red;
+    }
+    
+    </style>
+
+</head>
+
+<body>
+
+    <template id="loginbox">
+        <div>
+            <h2>login---{{$route.query.id}}</h2>
+        </div>
+    </template>
+
+    <template id="regbox">
+        <div>
+            <h2>reg---{{$route.params.id}}</h2>
+            <router-link to="/inside">inside</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+
+    <template id="insidereg">
+            <div>
+                <h2>insidereg</h2>
+            </div>
+        </template>
+
+    <div id="app">
+        <router-link to="/login?id=9">登录</router-link>
+        <router-link to="/reg/10">注册</router-link>
+
+        <router-view></router-view>
+    </div>
+    <script>
+        var a = Vue.component('loginbox', {
+            template: '#loginbox',
+        });
+
+        var b = Vue.component('regbox', {
+            template: '#regbox',
+        });
+
+        var c = Vue.component('insidereg', {
+            template: '#insidereg',
+        });
+
+        const routerobj = new VueRouter({
+            routes: [{
+                path:'/',
+                redirect:'/login',
+            },
+                {
+                    path: '/login',
+                    component:a,
+
+                },
+                {
+                    path: '/reg/:id',
+                    component:b,
+                    children:[
+                        {
+                            path:'/inside',
+                            component:c,
+                        }
+                    ]
+                },
+            ]
+        })
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+
+            },
+            methods: {
+
+            },
+            router: routerobj ,
+        })
+    </script>
+</body>
+
+</html>
