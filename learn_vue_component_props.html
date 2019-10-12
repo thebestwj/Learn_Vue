@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+    
+    .v-enter,
+    .v-leave-to{
+        opacity: 0;
+        transform: translateX(150px);
+    }
+
+    .v-enter-active,
+    .v-leave-active{
+        transition: all 1s ease;
+    }
+    
+    </style>
+
+
+</head>
+<body>
+    <template id="loginc">
+        <h1>sub login {{paramsg}}</h1>
+    </template>
+
+    <template id="regc">
+        <div>
+            <h1>sub reg</h1>
+            <input type="button" value="func" @click="mypfun">
+        </div>
+    </template>
+
+    <div id="app">
+        <input type="button" value="switch" @click="switchc">
+        <transition mode="out-in">
+            <component :is="comid" :paramsg="msg" @pfun="togglebgc"></component>
+        </transition>
+       
+    </div>
+
+
+
+    <script>
+
+        Vue.component('login', {
+            template:'#loginc',
+            props:['paramsg'],
+        });
+
+        Vue.component('reg', {
+            template:'#regc',
+            methods: {
+                mypfun(){
+                    this.$emit('pfun',123);
+                }
+            },
+        });
+
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                comid:'login',
+                msg:'this is the msg',
+            },
+            methods: {
+                switchc(){
+                    console.log('switch');
+                    if(this.comid =='login') this.comid='reg';
+                    else if(this.comid =='reg') this.comid='login';
+                },
+                togglebgc(data){
+                    console.log('toggle' +data);
+                }
+            },
+        })
+        </script>
+</body>
+</html>

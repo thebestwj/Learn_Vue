@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./animate.css">
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translate(150px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+
+
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            transform: translateY(150px);
+        }
+
+        .my-enter-active,
+        .my-leave-active {
+            transition: all 0.8s ease;
+        }
+
+        .ball {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click="flag=!flag">
+        <transition>
+            <h3 v-if="flag">aaaa</h3>
+        </transition>
+        <transition name="my">
+            <h3 v-if="flag">aaaa</h3>
+        </transition>
+
+        <transition :duration="{enter:1000,leave:1000}" enter-active-class="animated flipInX"
+            leave-active-class="animated flipOutY">
+            <h5 v-if="flag">bbbb</h3>
+        </transition>
+
+        <input type="button" value="add to cart" @click="flagball=!flagball">
+
+        <transition name="ball" @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-if="flagball">
+            </div>
+        </transition>
+
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+                flagball: false,
+            },
+            methods: {
+                beforeEnter(el) {
+                    el.style.transform = "translate(0,0)";
+                },
+                enter(el, done) {
+                    el.offsetWidth;
+                    el.style.transform = "translate(150px,450px)";
+                    el.style.transition = 'all 1s ease';
+                    console.log(this.flagball);
+                    done();
+                },
+                afterEnter(el) {
+                    this.flagball = !this.flagball;
+                },
+            },
+        });
+    </script>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

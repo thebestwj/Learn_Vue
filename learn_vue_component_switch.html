@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+    
+    .v-enter,
+    .v-leave-to{
+        opacity: 0;
+        transform: translateX(150px);
+    }
+
+    .v-enter-active,
+    .v-leave-active{
+        transition: all 1s ease;
+    }
+    
+    </style>
+
+
+</head>
+<body>
+    <template id="loginc">
+        <h1>login</h1>
+    </template>
+
+    <template id="regc">
+        <h1>reg</h1>
+    </template>
+
+    <div id="app">
+        <input type="button" value="switch" @click="switchc">
+        <transition mode="out-in">
+                <component :is="comid"></component>
+        </transition>
+       
+    </div>
+
+
+
+    <script>
+
+        Vue.component('login', {
+            template:'#loginc',
+        });
+
+        Vue.component('reg', {
+            template:'#regc',
+        });
+
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                comid:'login',
+            },
+            methods: {
+                switchc(){
+                    console.log('switch');
+                    if(this.comid =='login') this.comid='reg';
+                    else if(this.comid =='reg') this.comid='login';
+                }
+            },
+        })
+        </script>
+</body>
+</html>
