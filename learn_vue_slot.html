@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+
+<template id="aaa">
+    <div>
+        <h2>component</h2>
+        <slot :data="msg"><p>{{msg}}</p></slot>
+    </div>
+</template>
+
+    <div id="app">
+        <cpn><button>{{msg}}</button></cpn>
+        <cpn>
+            <template slot-scope="slot">
+                {{slot.data}}
+            </template>
+        </cpn>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:"father msg",
+
+            },
+            methods: {
+        
+            },
+            components:{
+                cpn:{
+                    template:"#aaa",
+                    data(){
+                        return {msg:"child msg"}
+                    }
+                }  
+            }
+        })
+    </script>
+</body>
+</html>
